@@ -5,7 +5,6 @@ import sys
 import csv
 import urllib2
 import string
-import re
 
 manylines=1
 
