@@ -4,3 +4,8 @@ This is a rewrite in Python to of my original shell script to get the hourly dat
 
 Herramienta para obtener los datos de las estaciones metereologicas automáticas de la AEMET
 Reescritura en Python de mi herramienta original en shell script
+
+## Files:
+
+* station.id: List of all AEMET stations in format [province];[station_id];[station_location] as of commit date
+
