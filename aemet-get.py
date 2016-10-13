@@ -14,6 +14,6 @@ with open('station.id') as stnfile:
         urlResponse = urllib2.urlopen(curlUri)
         aemetData = urlResponse.read()
         aemetDataLast = aemetData.splitlines()[4]
-        lineOut = '"' + stationProv + '";' + '"' + stationId + '";' + '"' + stationLoc + '";' + aemetDataLast
+        lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '",' + aemetDataLast
         print lineOut
         
