@@ -8,9 +8,7 @@ import string
 import re
 from geopy.geocoders import Nominatim
 
-
-manylines=1
-
+manylines = 1
 
 with open('station.id') as stnfile:
     stations = csv.reader(stnfile, delimiter=';')
@@ -20,13 +18,13 @@ with open('station.id') as stnfile:
         stationLoc = station[2]
         # Start of Geostuff
         geolocator = Nominatim()
-	location = geolocator.geocode(stationLoc)
-        try: 
-	    lat=float(location.latitude)
-	    lon=float(location.longitude)
+        location = geolocator.geocode(stationLoc)
+        try:
+            lat = float(location.latitude)
+            lon = float(location.longitude)
             geo = str(lat) + ',' + str(lon)
-            print stationProv + ';' + stationId + ';' +  stationLoc + ';"' + geo + '"'
+            print stationProv + ';' + stationId + ';' + stationLoc + ';' + geo
             # print finalLine
-	except:
+        except:
             finalLine = stationProv + ';' + stationId + ';' + stationLoc + ';******************** GEODATOS NO DISPONIBLES *********************'
             print finalLine
