@@ -19,12 +19,13 @@ if manylines > 24:
     print "The maximum of last values that can be retrieved from AEMET is 24"
     sys.exit(254)
 
-with open('/home/volkerk/aemet-hourly-data/station.id') as stnfile:
+with open('geo.id') as stnfile:
     stations = csv.reader(stnfile, delimiter=';')
     for station in stations:
         stationProv = station[0]
         stationId = station[1]
         stationLoc = station[2]
+        stationGeo = station[3]
         # we construct the curl URI
         curlUri='http://www.aemet.es/es/eltiempo/observacion/ultimosdatos_' + stationId + '_datos-horarios.csv?k=and&l=' + stationId + '&datos=det&w=0&f=temperatura&x=h24'
         urlResponse = urllib2.urlopen(curlUri)
@@ -32,7 +33,7 @@ with open('/home/volkerk/aemet-hourly-data/station.id') as stnfile:
         lastline = manylines+4
         for thisline in range (4,lastline,1):
             aemetDataLast = aemetData.splitlines()[thisline]
-            lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '",' + aemetDataLast
+            lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '",' + '"' + stationGeo  + '",' + aemetDataLast
             # now let's separate into csv, we need this to build the unique ID for ElasticSearch
             dataLine = StringIO.StringIO(lineOut)
             csvData = csv.reader(dataLine, delimiter=',')
