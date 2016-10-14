@@ -19,7 +19,7 @@ if manylines > 24:
     print "The maximum of last values that can be retrieved from AEMET is 24"
     sys.exit(254)
 
-with open('station.id') as stnfile:
+with open('/home/volkerk/aemet-hourly-data/station.id') as stnfile:
     stations = csv.reader(stnfile, delimiter=';')
     for station in stations:
         stationProv = station[0]
