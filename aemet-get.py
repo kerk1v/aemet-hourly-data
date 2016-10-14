@@ -32,7 +32,7 @@ with open('/home/volkerk/aemet-hourly-data/station.id') as stnfile:
         lastline = manylines+4
         for thisline in range (4,lastline,1):
             aemetDataLast = aemetData.splitlines()[thisline]
-            lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '"," ",' + aemetDataLast
+            lineOut = '"' + stationProv + '","' + stationId + '","' + stationLoc + '",' + aemetDataLast
             # now let's separate into csv, we need this to build the unique ID for ElasticSearch
             dataLine = StringIO.StringIO(lineOut)
             csvData = csv.reader(dataLine, delimiter=',')
