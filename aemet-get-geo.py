@@ -38,7 +38,7 @@ with open('geo.id') as stnfile:
             dataLine = StringIO.StringIO(lineOut)
             csvData = csv.reader(dataLine, delimiter=',')
             for csvDataLine in csvData: 
-                rawId = csvDataLine[3] + csvDataLine[1]
+                rawId = csvDataLine[4] + csvDataLine[1]
 		id=filter(str.isalnum, rawId)
             #and now for constructing our CSV output and printing it, first field is ID
             outLine = '"' + id + '",' + lineOut
