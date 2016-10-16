@@ -19,5 +19,7 @@ with open('geo.id') as stnfile:
         geoId = station[3]
         # Start of Geostuff
         geoList = geoId.strip().split(",")
-        geo = '"' + geoList[1] + ',' + geoList[0] + '"'
+        geo1 = geoList[0]
+        geo2 = geoList[1]
+        geo = '"' + geo1[:7] + ',' + geo2[:8] + '"'
         print stationProv + ';' + stationId + ';' + stationLoc + ';' + geo
