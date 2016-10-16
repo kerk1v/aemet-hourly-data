@@ -8,6 +8,9 @@ Reescritura en Python de mi herramienta original en shell script
 ## Files:
 
 * station.id: List of all AEMET stations in format [province];[station_id];[station_location] as of commit date
+* geo.id: List of all AEMET stations, in format [province];[station_id];[station_location];[geo_location] as of commit date, hand-checked and corrected
+* aemet-get.py: See below
+* aemet-get-geo.py: Same, but with the geodata as the same 4th field in the CSV
 
 ## Usage
 
