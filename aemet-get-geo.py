@@ -6,12 +6,12 @@ import csv
 import urllib2
 import string
 
-manylines=1
+manylines = 1
 
-if len(sys.argv)==2:
-    manylines=int(sys.argv[1])
+if len(sys.argv) == 2:
+    manylines = int(sys.argv[1])
 
-if len(sys.argv)>2:
+if len(sys.argv) > 2:
     print "Usage: ./aemet-get.py [number of last values to retrieve]"
     sys.exit(254)
 
@@ -27,19 +27,19 @@ with open('geo.id') as stnfile:
         stationLoc = station[2]
         stationGeo = station[3]
         # we construct the curl URI
-        curlUri='http://www.aemet.es/es/eltiempo/observacion/ultimosdatos_' + stationId + '_datos-horarios.csv?k=and&l=' + stationId + '&datos=det&w=0&f=temperatura&x=h24'
+        curlUri = 'http://www.aemet.es/es/eltiempo/observacion/ultimosdatos_' + stationId + '_datos-horarios.csv?k=and&l=' + stationId + '&datos=det&w=0&f=temperatura&x=h24'
         urlResponse = urllib2.urlopen(curlUri)
         aemetData = urlResponse.read()
-        lastline = manylines+4
-        for thisline in range (4,lastline,1):
+        lastline = manylines + 4
+        for thisline in range(4, lastline, 1):
             aemetDataLast = aemetData.splitlines()[thisline]
-            lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '",' + '"' + stationGeo  + '",' + aemetDataLast
+            lineOut = '"' + stationProv + '",' + '"' + stationId + '",' + '"' + stationLoc + '",' + '"' + stationGeo + '",' + aemetDataLast
             # now let's separate into csv, we need this to build the unique ID for ElasticSearch
             dataLine = StringIO.StringIO(lineOut)
             csvData = csv.reader(dataLine, delimiter=',')
-            for csvDataLine in csvData: 
+            for csvDataLine in csvData:
                 rawId = csvDataLine[4] + csvDataLine[1]
-		id=filter(str.isalnum, rawId)
-            #and now for constructing our CSV output and printing it, first field is ID
+                id = filter(str.isalnum, rawId)
+            # and now for constructing our CSV output and printing it, first field is ID
             outLine = '"' + id + '",' + lineOut
             print outLine
