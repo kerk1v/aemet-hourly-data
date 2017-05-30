@@ -27,18 +27,21 @@ with open('/home/volkerk/aemet-hourly-data/station.id') as stnfile:
         stationLoc = station[2]
         # we construct the curl URI
         curlUri='http://www.aemet.es/es/eltiempo/observacion/ultimosdatos_' + stationId + '_datos-horarios.csv?k=and&l=' + stationId + '&datos=det&w=0&f=temperatura&x=h24'
-        urlResponse = urllib2.urlopen(curlUri)
-        aemetData = urlResponse.read()
-        lastline = manylines+4
-        for thisline in range (4,lastline,1):
-            aemetDataLast = aemetData.splitlines()[thisline]
-            lineOut = '"' + stationProv + '","' + stationId + '","' + stationLoc + '",' + aemetDataLast
-            # now let's separate into csv, we need this to build the unique ID for ElasticSearch
-            dataLine = StringIO.StringIO(lineOut)
-            csvData = csv.reader(dataLine, delimiter=',')
-            for csvDataLine in csvData: 
-                rawId = csvDataLine[3] + csvDataLine[1]
-		id=filter(str.isalnum, rawId)
-            #and now for constructing our CSV output and printing it, first field is ID
-            outLine = '"' + id + '",' + lineOut
-            print outLine
+        try:
+            urlResponse = urllib2.urlopen(curlUri)
+            aemetData = urlResponse.read()
+            lastline = manylines+4
+            for thisline in range (4,lastline,1):
+                aemetDataLast = aemetData.splitlines()[thisline]
+                lineOut = '"' + stationProv + '","' + stationId + '","' + stationLoc + '",' + aemetDataLast
+                # now let's separate into csv, we need this to build the unique ID for ElasticSearch
+                dataLine = StringIO.StringIO(lineOut)
+                csvData = csv.reader(dataLine, delimiter=',')
+                for csvDataLine in csvData: 
+                    rawId = csvDataLine[3] + csvDataLine[1]
+		    id=filter(str.isalnum, rawId)
+                #and now for constructing our CSV output and printing it, first field is ID
+                outLine = '"' + id + '",' + lineOut
+                print outLine
+        except:
+            print('Sorry, no data for ' + stationId + ' at ' + stationLoc)
